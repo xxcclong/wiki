@@ -51,18 +51,26 @@ def search(request):
 	global info
 	request.encoding = 'utf-8'
 	if 'q' in request.GET:
+		kind = 'all'
+		p = re.compile(r'\s')
+		newq = request.GET['q']
+		if kind != 'all':
+			ask - p.split(request.GET['q'])
+			for ite in ask:
+				newq += kind+':'+ite+' '
+
 		ye = 0
 		if 'PAGE' in request.GET:
 			ye = int(request.GET['PAGE']) - 1
-		p = re.compile(r'\s')
-		ask = p.split(request.GET['q'])
+		
+		ask = p.split(newq)
 		searchname = ""
 		for ww in range(len(ask)):
 			searchname += ask[ww]
 			if ww != len(ask)-1:
 				searchname+= '+'
 
-		sovle(request.GET['q'])
+		sovle(newq)
 		pp = []
 		newposes = []
 		for uu in poses:
@@ -72,7 +80,7 @@ def search(request):
 		people = []
 		i = 3*ye
 		p = re.compile(r'\s')
-		ask = p.split(request.GET['q'])
+		ask = p.split(newq)
 		while i<len(newposes) and i<3*(ye+1):
 			person = {}
 			person['shortcontent'] = ""
